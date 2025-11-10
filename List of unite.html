@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>単位取得状況アコーディオン</title>
+    <style>
+        /* ======================== */
+        /* CSS: スタイル定義 */
+        /* ======================== */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            color: #333;
+        }
+
+        /* アコーディオンのタイトル（クリック部分） */
+        .accordion-header {
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 15px;
+            border: 1px solid #dee2e6;
+            cursor: pointer; /* マウスオーバー時にカーソルをポインターにする */
+            margin-top: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            display: flex;
+            justify-content: space-between; /* タイトルと矢印を両端に配置 */
+            align-items: center;
+            font-weight: bold;
+        }
+        
+        /* マウスオーバー時のエフェクト */
+        .accordion-header:hover {
+            background-color: #e2e6ea;
+        }
+
+        /* アコーディオンの中身 (単位一覧表) */
+        .accordion-content {
+            padding: 0 15px;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-top: none;
+            overflow: hidden; /* 内容を隠す */
+            height: 0; /* 初期状態で高さを0にして非表示にする */
+            transition: height 0.3s ease-out; /* 開閉アニメーション */
+        }
+
+        /* 開いている状態のCSS */
+        .accordion-header.active {
+            background-color: #007bff;
+            color: white;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        /* 矢印アイコン */
+        .arrow {
+            display: inline-block;
+            transition: transform 0.3s;
+            font-size: 1.2em;
+        }
+        .accordion-header.active .arrow {
+            transform: rotate(180deg); /* 開いた時に矢印を回転 */
+        }
+
+        /* 単位一覧表のスタイル */
+        .unit-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        .unit-table th, .unit-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        .unit-table th {
+            background-color: #f2f2f2;
+            font-weight: normal;
+        }
+        .text-left {
+            text-align: left;
+        }
+        .total-row td {
+            font-weight: bold;
+            background-color: #e6f7ff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+    <h1>UniLink</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html">Timetable</a></li>
+        <li><a href="train.html">train</a></li>
+        <li><a href="check.html">Check</a></li>
+        <li><a href="List of unite.html">List of unite</a></li>
+      </ul>
+    </nav>
+  </header>
+
+    <h1>単位一覧</h1>
+
+    <div class="accordion-container">
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                1. 教養共通科目 <span class="arrow">▼</span>
+            </div>
+            <div class="accordion-content">
+                <table class="unit-table">
+                    <thead>
+                        <tr><th>区分</th><th class="text-left">科目名</th><th>単位数</th>
+                    </thead>
+                    <tbody>
+                        <tr><td>必修</td><td class="text-left">近大ゼミ</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">人権と社会１</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">人権と社会２</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">暮らしの中の憲法</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">心理と行動</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">現代の社会学</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">芸術鑑賞論</td><td>2</td>    
+                        <tr><td>選択</td><td class="text-left">哲学と人間・社会</td><td>2</td>                
+                        <tr><td>選択</td><td class="text-left">現代社会と倫理</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">現代社会と法</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">現代社会と政治</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">教養特殊講義A</td><td>2</td>
+                        <tr><td>必修</td><td class="text-left">情報処理基礎</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">データリテラシー入門</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">キャリアデザイン</td><td>2</td> 
+                        <tr><td>選択</td><td class="text-left">暮らしの中の起業入門</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">日本語の技法</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">生命の科学</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">環境科学</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">思考の技術</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">経営・経済のための数学</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">ビジネス実務講座</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">教養特殊講義</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">教養特殊講義C</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">生涯スポーツ１</td><td>1</td>                                                           
+                        <tr><td>選択</td><td class="text-left">生涯スポーツ２</td><td>1</td>                                                           
+                        <tr><td>選択</td><td class="text-left">健康とスポーツの科学</td><td>2</td>                                                           
+                        <tr><td>選択</td><td class="text-left">地域と環境の地理学</td><td>2</td>                                                           
+                        <tr><td>選択</td><td class="text-left">国際化と異文化理解</td><td>2</td>                                                           
+                        <tr><td>選択</td><td class="text-left">日本近現代史</td><td>2</td>                                                           
+                        <tr><td>選択</td><td class="text-left">世界近現代史</td><td>2</td>                                                           
+                        <tr><td>選択</td><td class="text-left">日本文化論</td><td>2</td>                                                           
+                        <tr><td>選択</td><td class="text-left">教養特殊講義B</td><td>2</td>                                                                                                                            
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                2. 外国語科目 <span class="arrow">▼</span>
+            </div>
+            <div class="accordion-content">
+                <table class="unit-table">
+                    <thead>
+                        <tr><th>区分</th><th class="text-left">科目名</th><th>単位数</th>
+                    </thead>
+                    <tbody>
+                        <tr><td>必修</td><td class="text-left">英語１GA</td><td>1</td>
+                        <tr><td>必修</td><td class="text-left">英語１GB</td><td>1</td>
+                        <tr><td>必修</td><td class="text-left">英語１RA</td><td>1</td>
+                        <tr><td>必修</td><td class="text-left">英語１RB</td><td>1</td>
+                        <tr><td>必修</td><td class="text-left">英語２A</td><td>1</td>
+                        <tr><td>必修</td><td class="text-left">英語２B</td><td>1</td>
+                        <tr><td>選択必修</td><td class="text-left">英語３A</td><td>1</td>
+                        <tr><td>選択必修</td><td class="text-left">英語３B</td><td>1</td>
+                        <tr><td>必修</td><td class="text-left">オーラルイングリッシュ１A</td><td>1</td>
+                        <tr><td>必修</td><td class="text-left">オーラルイングリッシュ１B</td><td>1</td>
+                        <tr><td>必修</td><td class="text-left">オーラルイングリッシュ２A</td><td>1</td>
+                        <tr><td>必修</td><td class="text-left">オーラルイングリッシュ２B</td><td>1</td>
+                        <tr><td>選択必修</td><td class="text-left">オーラルイングリッシュ３A</td><td>1</td>
+                        <tr><td>選択必修</td><td class="text-left">オーラルイングリッシュ３B</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">資格英語A</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">資格英語B</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">英語表現A</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">英語表現B</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">英語特殊講義A</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">英語特殊講義B</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">ドイツ語総合１</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">ドイツ語総合２</td><td>1</td>        
+                        <tr><td>選択</td><td class="text-left">ドイツ語総合３</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">ドイツ語総合４</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">フランス語総合１</td><td>1</td>                                                                                
+                        <tr><td>選択</td><td class="text-left">フランス語総合２</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">フランス語総合３</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">フランス語総合４</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">スペイン語総合１</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">スペイン語総合２</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">スペイン語総合３</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">スペイン語総合４</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">中国語総合１</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">中国語総合２</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">中国語総合３</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">中国語総合４</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">韓国語総合１</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">韓国語総合２</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">韓国語総合３</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">韓国語総合４</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">ドイツ語コミュニケーション１</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">ドイツ語コミュニケーション２</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">ドイツ語コミュニケーション３</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">ドイツ語コミュニケーション４</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">フランス語コミュニケーション１</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">フランス語コミュニケーション２</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">フランス語コミュニケーション３</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">フランス語コミュニケーション４</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">スペイン語コミュニケーション１</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">スペイン語コミュニケーション２</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">中国語コミュニケーション１</td><td>1</td>        
+                        <tr><td>選択</td><td class="text-left">中国語コミュニケーション２</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">中国語コミュニケーション３</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">中国語コミュニケーション４</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">韓国語コミュニケーション１</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">韓国語コミュニケーション２</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">韓国語コミュニケーション３</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">韓国語コミュニケーション４</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">ドイツ語カルチャーセミナー１</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">ドイツ語カルチャーセミナー２</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">フランス語カルチャーセミナー１</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">フランス語カルチャーセミナー２</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">中国語カルチャーセミナー１</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">中国語カルチャーセミナー２</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">韓国語カルチャーセミナー１</td><td>1</td>
+                        <tr><td>選択</td><td class="text-left">韓国語カルチャーセミナー２</td><td>1</td>                                                                                   
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                3. 専門科目：基礎科目 <span class="arrow">▼</span>
+            </div>
+            <div class="accordion-content">
+                <table class="unit-table">
+                    <thead>
+                        <tr><th>区分</th><th class="text-left">科目名</th><th>単位数</th>
+                    </thead>
+                    <tbody>
+                        <tr><td>必履修</td><td class="text-left">経営学A</td><td>2</td>
+                        <tr><td>必履修</td><td class="text-left">経営学B</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">商学A</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">商学B</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">簿記論A</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">簿記論B</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">統計学</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">マーケティング</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">コミュニケーション基礎</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">会計学基礎</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">ミクロ経済</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">マクロ経済</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">ITビジネス入門</td><td>2</td>                                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="accordion-item">
+            <div class="accordion-header">
+                4. 専門科目：情報科目 <span class="arrow">▼</span>
+            </div>
+            <div class="accordion-content">
+                <table class="unit-table">
+                    <thead>
+                        <tr><th>区分</th><th class="text-left">科目名</th><th>単位数</th>
+                    </thead>
+                    <tbody>
+                        <tr><td>選択</td><td class="text-left">コンピューター概論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">コンピューター実習</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">情報倫理</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">経営情報論</td><td>2</td> 
+                        <tr><td>選択</td><td class="text-left">情報管理論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">データ分析論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">情報分析論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">コンピューター特殊実習A</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">コンピューター特殊実習B</td><td>2</td> 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                5. 専門科目：関係科目 <span class="arrow">▼</span>
+            </div>
+            <div class="accordion-content">
+                <table class="unit-table">
+                    <thead>
+                        <tr><th>区分</th><th class="text-left">科目名</th><th>単位数</th>
+                    </thead>
+                    <tbody>
+                        <tr><td>選択</td><td class="text-left">特殊講義A</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">特殊講義B</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">特殊講義C</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">特殊講義D</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">特殊講義E</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">特殊講義F</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">原価計算１</td><td>2</td> 
+                        <tr><td>選択</td><td class="text-left">財務会計１</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">ビジネスエコノミクス</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">日本経済論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">民法１</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">民法２</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">商法総則・商行為</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">会社法</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">秘書学１</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">秘書学２</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">特殊講義G</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">特殊講義H</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">特殊講義I</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">特殊講義J</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">特殊講義K</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">特殊講義L</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">外国文献研究A</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">外国文献研究B</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">国際経済論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">地域経済論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">特殊講義M</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">特殊講義N</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">特殊講義O</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">特殊講義P</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">特殊講義Q</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">特殊講義R</td><td>2</td>                                            
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                5. 専門科目：基幹科目 （企業経営コース）<span class="arrow">▼</span>
+            </div>
+            <div class="accordion-content">
+                <table class="unit-table">
+                    <thead>
+                        <tr><th>区分</th><th class="text-left">科目名</th><th>単位数</th>
+                    </thead>
+                    <tbody>
+                        <tr><td>選択</td><td class="text-left">企業形態論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">公共経営論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">企業行動論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">企業発展論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">経営管理論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">現代日本経営史</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">経営史</td><td>2</td> 
+                        <tr><td>選択</td><td class="text-left">ビジネス・エシックス</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">経営数学A</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">経営数学B</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">経営戦略論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">事業システム論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">組織行動論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">経営組織論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">経営統計論A</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">経営統計論B</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">コーポレートガバナンス論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">多国籍企業論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">国際経営論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">投資決定論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">財務管理論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">ダイバーシティ経営論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">人的資源管理論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">経営科学</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">生産管理論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">サービス経営論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">マーケティング管理論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">消費者行動分析</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">マネジメント・コントロール</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">意思決定論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">ネットビジネス論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">企業論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">ネットワーク産業論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">技術経営論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">イノベーション論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">財務分析</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">企業分析</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">西洋経営史</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">新興国ビジネス論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">地域経営論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">環境経営論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">中小企業経営論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">サービスサイエンス</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">非営利組織経営論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">公企業経営論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">ベンチャービジネス論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">コンテンツビジネス論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">ビジネス実施A</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">ビジネス実施B</td><td>2</td>                                                       
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+              <div class="accordion-item">
+            <div class="accordion-header">
+                5. 専門科目：基幹科目 （ITビジネスコース）<span class="arrow">▼</span>
+            </div>
+            <div class="accordion-content">
+                <table class="unit-table">
+                    <thead>
+                        <tr><th>区分</th><th class="text-left">科目名</th><th>単位数</th>
+                    </thead>
+                    <tbody>
+                        <tr><td>選択</td><td class="text-left">ITビジネス論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">ネットビジネス論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">ネットビジネス基礎</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">B2Bビジネス基礎</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">情報戦略論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">企業と情報戦略</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">システム企画論</td><td>2</td> 
+                        <tr><td>選択</td><td class="text-left">システム運用論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">情報組織論基礎</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">情報組織論応用</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">プログラム設計論１</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">プログラム設計論２</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">プログラミング論基礎</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">プログラミング論応用</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">コンピューター特殊実習C</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">コンピューター特殊実習D</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">ビジネスシチュエーション</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">経営科学</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">情報システム入門</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">ITビジネス・プランニング論１</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">ITビジネス・プランニング論２</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">B2Bビジネス応用</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">コンテンツビジネス論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">データベース設計論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">データベース構築論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">プロジェクト管理論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">プロジェクト管理実施</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">アプリケーション構築論１</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">アプリケーション構築論２</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">ITビジネス特殊実習A</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">ITビジネス特殊実習B</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">ITビジネス特殊実習C</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">ITビジネス特殊実習D</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">会計情報論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">電子商取引法</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">情報ネットワーク論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">情報セキュリティ論</td><td>2</td>
+                        <tr><td>選択</td><td class="text-left">情報システム論</td><td>2</td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+         <div class="accordion-item">
+            <div class="accordion-header">
+                4. 専門科目：総合科目 <span class="arrow">▼</span>
+            </div>
+            <div class="accordion-content">
+                <table class="unit-table">
+                    <thead>
+                        <tr><th>区分</th><th class="text-left">科目名</th><th>単位数</th>
+                    </thead>
+                    <tbody>
+                        <tr><td>選択</td><td class="text-left">演習１</td><td>4</td>
+                        <tr><td>選択</td><td class="text-left">演習２</td><td>4</td> 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ========================
+        // JavaScript: 開閉動作の定義
+        // ========================
+        document.addEventListener('DOMContentLoaded', function() {
+            // すべてのアコーディオンヘッダーを取得
+            const headers = document.querySelectorAll('.accordion-header');
+
+            headers.forEach(header => {
+                header.addEventListener('click', function() {
+                    // クリックされたヘッダーと、その次のコンテンツを取得
+                    const content = this.nextElementSibling;
+                    
+                    // ヘッダーに 'active' クラスを付け外しする
+                    this.classList.toggle('active');
+
+                    // コンテンツの開閉処理
+                    if (this.classList.contains('active')) {
+                        // 開く時: contentのscrollHeight（コンテンツ全体の高さ）を取得し、heightに設定
+                        content.style.height = content.scrollHeight + 'px';
+                    } else {
+                        // 閉じる時: heightを0に戻す
+                        content.style.height = '0';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

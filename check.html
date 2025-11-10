@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>単位取得チェッカー</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+    <h1>UniLink</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html">Timetable</a></li>
+        <li><a href="train.html">train</a></li>
+        <li><a href="check.html">Check</a></li>
+        <li><a href="List of unite.html">List of unite</a></li>
+      </ul>
+    </nav>
+  </header>
+    <div class="container">
+        <h1>🎓 取得単位チェック＆集計</h1>
+
+        <div class="input-section">
+            <h2>単位の追加</h2>
+            <select id="courseType">
+                <option value="共通教養科目">共通教養科目</option>
+                <option value="専門科目">専門科目</option>
+                <option value="外国語科目">外国語科目</option>
+                <option value="その他">その他</option>
+            </select>
+            <input type="text" id="courseName" placeholder="科目名 (例: ソフトウェア工学)">
+            <input type="number" id="credits" min="1" placeholder="単位数 (例: 2)">
+            <button onclick="addCourse()">単位を追加</button>
+        </div>
+        
+        <hr>
+
+        <div class="list-section">
+            <h2>取得単位一覧</h2>
+            <table id="courseTable">
+                <thead>
+                    <tr>
+                        <th>分類</th>
+                        <th>科目名</th>
+                        <th>単位数</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="courseList">
+                    </tbody>
+            </table>
+        </div>
+
+        <hr>
+
+        <div class="summary-section">
+            <h2>集計結果</h2>
+            <p><strong>総取得単位数:</strong> <span id="totalCredits">0</span> 単位</p>
+            <div id="creditBreakdown">
+                </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

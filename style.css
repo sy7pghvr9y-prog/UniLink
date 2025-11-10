@@ -1,0 +1,76 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1a1a1a; /* 全体を黒っぽく */
+    color: #f0f0f0; /* 文字色を明るく */
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    background: #282828; /* コンテナ背景を少し暗めの灰色に */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+    text-align: center;
+    color: #4CAF50; /* タイトル色を緑系に */
+    margin-bottom: 30px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
+}
+
+#timetable-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap; /* 画面が狭くなったら折り返す */
+}
+
+/* 各駅の時刻表ブロック */
+.station-block {
+    flex: 1; /* スペースを均等に使う */
+    min-width: 280px;
+    background-color: #333; /* 駅ブロックの背景 */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.station-block h2 {
+    color: #FFC107; /* 駅名を黄色系に */
+    text-align: center;
+    margin-top: 0;
+    border-bottom: 1px solid #555;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+}
+
+/* 時刻リスト */
+.times-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1.1em;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px; /* 時刻間の隙間 */
+}
+
+.times-list li {
+    padding: 5px 8px;
+    border-radius: 4px;
+    background-color: #444; /* 通常の時刻の背景 */
+    transition: background-color 0.3s;
+}
+
+/* 最も近い時刻（ハイライト） */
+.times-list li.next-time {
+    background-color: #4CAF50; /* ハイライト色を緑系に */
+    color: #fff;
+    font-weight: bold;
+    transform: scale(1.05); /* わずかに拡大 */
+    box-shadow: 0 0 8px #4CAF50;
+}
