@@ -168,3 +168,4 @@ function init() {
 // 初期表示時に実行
 // ★ renderCourses() の代わりに init() を呼び出す
 document.addEventListener('DOMContentLoaded', init);
+
