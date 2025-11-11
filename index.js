@@ -1,3 +1,43 @@
+// ===============================================
+// ★★★ index.js の一番上に追加する認証チェック ★★★
+// ===============================================
+
+function checkAuthentication() {
+    const userDataString = localStorage.getItem('currentUser');
+    
+    // ユーザーデータがない場合
+    if (!userDataString) {
+        alert('認証が必要です。ログインページに戻ります。');
+        window.location.href = 'login.html'; // ログインページへリダイレクト
+        return null;
+    }
+    
+    const userData = JSON.parse(userDataString);
+
+    // 認証情報が有効かチェック
+    if (userData.isAuthenticated !== true || !userData.faculty) {
+        alert('セッションが切れました。再ログインしてください。');
+        localStorage.removeItem('currentUser');
+        window.location.href = 'login.html';
+        return null;
+    }
+
+    // 認証済みであれば、ユーザー情報をヘッダーに表示する
+    document.addEventListener('DOMContentLoaded', () => {
+        const headerTitle = document.querySelector('header h1');
+        if (headerTitle) {
+            headerTitle.textContent = `UniLink - ${userData.faculty} 時間割`;
+        }
+    });
+
+    return userData;
+}
+
+// ページロード時、一番最初に認証チェックを行う
+const currentUser = checkAuthentication();
+
+// 認証に成功した場合のみ、時間割の機能 (renderTimetableなど) を実行するロジックをここに続けます。
+// if (currentUser) { /* 既存のコードをここに配置 */ }
 const DAYS = ['月', '火', '水', '木', '金', '土'];
 const PERIODS = 7;
 const TABLE_BODY_ID = 'course-body';
@@ -93,4 +133,5 @@ function showMessage(text, color) {
 }
 
 // ページがロードされたときに実行
+
 document.addEventListener('DOMContentLoaded', generateTimetable);
