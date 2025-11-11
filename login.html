@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログイン/登録 - UniLink</title>
+    <link rel="stylesheet" href="index.css">
+    
+    <style>
+        body { 
+            background-color: #f4f7f9;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        #login-container {
+            max-width: 400px;
+            width: 90%;
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        #login-container h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        #login-container label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            text-align: left;
+        }
+        #login-container input[type="text"],
+        #login-container input[type="password"],
+        #login-container select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        #login-container button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 25px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #login-container button:hover {
+            background-color: #2980b9;
+        }
+        #auth-message {
+            color: #e74c3c;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="login-container">
+        <h1 id="form-title">UniLink ログイン</h1> 
+        
+        <form id="authForm">
+            <label for="faculty">学部:</label>
+            <select id="faculty" required>
+                <option value="" disabled selected>学部を選択してください</option>
+                <option value="経営学部">経営学部</option>
+                <option value="文学部">文学部</option>
+                <option value="経済学部">経済学部</option>
+                <option value="法学部">法学部</option>
+                <option value="情報学部">情報学部</option>
+                <option value="薬学部">薬学部</option>
+                <option value="建築学部">建築学部</option>
+                <option value="理工学部">理工学部</option>
+                <option value="国際学部">国際学部</option>
+                <option value="総合社会学部">総合社会学部</option>
+            </select>
+
+            <label for="password">パスワード:</label>
+            <input type="password" id="password" required>
+            
+            <button type="submit" id="auth-button">ログインして時間割へ</button>
+        </form>
+        <p id="auth-message"></p>
+
+        <p style="margin-top: 15px;">
+            <a href="#" id="toggle-auth-mode">アカウントをお持ちでない場合はこちらから新規登録</a>
+        </p>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html>
+
