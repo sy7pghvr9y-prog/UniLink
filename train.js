@@ -23,7 +23,7 @@ const timetableData = {
         "05:38", "06:08", "06:37", "06:55", "07:08", "07:23", "07:34", "07:48","08:01","08:20","08:34","08:49","09:03","09:25","09:41","10:01","10:22","10:37","10:52",
         "11:07", "11:22", "12:37", "11:52", "12:07", "12:22","12:37","12:52","13:07","13:22","13:37","13:52","14:07","14:22","14:37","14:52","15:07","15:23","15:38","15:53",
         "16:08", "16:23", "16:38", "16:53", "17:08", "17:23", "17:38", "17:53", "18:08", "18:23","18:38","18:53","19:08","19:23","19:38","19:53","20:08","20:23","20:38","20:53",
-        "21:13", "21:33", "21:53", "22:13", "22:39","23:04","23:25","23:53,"
+        "21:13", "21:33", "21:53", "22:13", "22:39","23:04","23:25","23:53"
     ]
 };
 
@@ -43,23 +43,73 @@ function getCurrentTimeMs() {
  * @returns {number} 0時からの経過ミリ秒
  */
 function timeStrToMs(timeStr) {
-    const [hours, minutes] = timeStr.split(':').map(Number);
+    // 念のため、末尾にコンマがある場合（JR長瀬駅のデータ）に対応
+    const cleanTimeStr = timeStr.replace(',', '');
+    const [hours, minutes] = cleanTimeStr.split(':').map(Number);
     return hours * 3600000 + minutes * 60000;
 }
 
 /**
- * 時刻表全体を生成し、最も近い時刻をハイライトする
+ * ミリ秒をHH:MM形式の時刻文字列に変換する
+ * @param {number} ms - 0時からの経過ミリ秒
+ * @returns {string} 時刻文字列 ("HH:MM")
+ */
+function msToTimeStr(ms) {
+    const totalMinutes = Math.floor(ms / 60000);
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+
+    const pad = (num) => String(num).padStart(2, '0');
+    return `${pad(hours)}:${pad(minutes)}`;
+}
+
+/**
+ * 時刻表全体を生成し、最も近い時刻とその1時間以内のみを表示する
  */
 function generateTimetables() {
     const container = document.getElementById('timetable-container');
     const currentTimeMs = getCurrentTimeMs();
+    // 1時間をミリ秒で定義
+    const ONE_HOUR_MS = 3600000; 
 
     container.innerHTML = ''; // コンテンツをクリア
 
     for (const station in timetableData) {
         const times = timetableData[station];
         
-        // --- 1. 駅ブロックの作成 ---
+        // すべての時刻文字列をミリ秒に変換
+        const timesMs = times.map(timeStr => timeStrToMs(timeStr));
+        
+        let nextTimeMs = null;
+        
+        // 1. 最も近い次の時刻を見つける
+        for (const timeMs of timesMs) {
+            if (timeMs >= currentTimeMs) {
+                nextTimeMs = timeMs;
+                break;
+            }
+        }
+
+        // 2. フィルタリング範囲を決定
+        // 最も近い時刻（nextTimeMs）がない場合、つまり最終電車後であれば、
+        // 翌日（0時台）の始発を範囲に含めるため、nextTimeMsをリストの最初の要素とする
+        if (nextTimeMs === null && timesMs.length > 0) {
+            nextTimeMs = timesMs[0];
+            // この場合、始発時刻から1時間以内を表示範囲とする
+        }
+        
+        // 次の時刻が見つからなかった場合（時刻表が空など）はスキップ
+        if (nextTimeMs === null) continue;
+
+
+        // 3. 1時間以内の時刻をフィルタリング
+        const filteredTimes = timesMs.filter(timeMs => {
+            // nextTimeMs から 1時間後までの範囲内にある時刻を抽出
+            return timeMs >= nextTimeMs && timeMs <= nextTimeMs + ONE_HOUR_MS;
+        });
+        
+        
+        // --- 4. 駅ブロックの作成と表示 ---
         const stationBlock = document.createElement('div');
         stationBlock.className = 'station-block';
         
@@ -67,30 +117,28 @@ function generateTimetables() {
         stationTitle.textContent = station;
         stationBlock.appendChild(stationTitle);
 
-        // --- 2. 時刻リストの作成 ---
         const timesList = document.createElement('ul');
         timesList.className = 'times-list';
         
-        let nextTimeFound = false; // 最も近い時刻を見つけたかどうかのフラグ
-        
-        times.forEach(timeStr => {
-            const timeMs = timeStrToMs(timeStr);
-            const isNextTime = !nextTimeFound && timeMs >= currentTimeMs; // 現在時刻以上で、まだ見つかっていない最初の時刻
-            
+        // フィルタリングされた時刻を表示
+        if (filteredTimes.length > 0) {
+            filteredTimes.forEach(timeMs => {
+                const timeStr = msToTimeStr(timeMs);
+                const listItem = document.createElement('li');
+                listItem.textContent = timeStr;
+
+                // 最も近い次の時刻をハイライト
+                if (timeMs === nextTimeMs) {
+                    listItem.classList.add('next-time');
+                }
+                
+                timesList.appendChild(listItem);
+            });
+        } else {
+            // フィルタリングで何も残らなかった場合（通常は発生しないが安全策として）
             const listItem = document.createElement('li');
-            listItem.textContent = timeStr;
-
-            if (isNextTime) {
-                listItem.classList.add('next-time');
-                nextTimeFound = true; // 次の時刻以降はハイライトしない
-            }
-            
+            listItem.textContent = '本日の運行は終了しました。';
             timesList.appendChild(listItem);
-        });
-
-        // もし次の時刻が見つからなかった場合（最終電車後）、リストの最初をハイライト（翌日始発）
-        if (!nextTimeFound && times.length > 0) {
-            timesList.firstChild.classList.add('next-time');
         }
 
         stationBlock.appendChild(timesList);
