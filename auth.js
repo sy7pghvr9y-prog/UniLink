@@ -118,6 +118,7 @@ function performLogin(user, messageElement) {
 
     // 認証後のページへリダイレクト
     setTimeout(() => {
-        window.location.href = 'index.html';
+        window.location.href = 'indexs.html';
     }, 500);
+
 }
