@@ -2,6 +2,56 @@
 let courses = [];
 
 /**
+ * 単位データをローカルストレージに保存する
+ */
+function saveCourses() {
+    try {
+        // 配列をJSON文字列に変換して保存
+        localStorage.setItem('acquiredCoursesData', JSON.stringify(courses));
+        showMessage('✅ 取得単位を保存しました。');
+    } catch (e) {
+        showMessage('⚠️ 保存に失敗しました。', true);
+        console.error("Failed to save data to localStorage:", e);
+    }
+}
+
+/**
+ * ローカルストレージから単位データを読み込む
+ */
+function loadCourses() {
+    try {
+        // 保存されたJSON文字列を読み込む
+        const storedData = localStorage.getItem('acquiredCoursesData');
+        if (storedData) {
+            // JSON文字列をJavaScriptのオブジェクト（配列）に戻す
+            courses = JSON.parse(storedData);
+            renderCourses(); // 読み込んだデータで表示を更新
+            showMessage('📥 取得単位を読み込みました。');
+            return true;
+        }
+    } catch (e) {
+        showMessage('⚠️ データの読み込みに失敗しました。', true);
+        console.error("Failed to load data from localStorage:", e);
+    }
+    return false;
+}
+
+/**
+ * メッセージを表示する
+ */
+function showMessage(text, isError = false) {
+    const messageElement = document.getElementById('message');
+    messageElement.textContent = text;
+    messageElement.style.color = isError ? '#e74c3c' : '#2ecc71';
+    setTimeout(() => {
+        messageElement.textContent = '';
+    }, 3000);
+}
+
+
+// --- 既存の関数の変更点 ---
+
+/**
  * 単位を追加する
  */
 function addCourse() {
@@ -29,6 +79,8 @@ function addCourse() {
     document.getElementById('credits').value = '';
 
     renderCourses();
+    // ★ 単位追加後に自動保存
+    saveCourses();
 }
 
 /**
@@ -38,7 +90,7 @@ function renderCourses() {
     const listBody = document.getElementById('courseList');
     listBody.innerHTML = ''; // 一旦リストをクリア
 
-    // リストの描画
+    // リストの描画 (変更なし)
     courses.forEach(course => {
         const row = listBody.insertRow();
         
@@ -65,10 +117,12 @@ function deleteCourse(id) {
     // 該当IDを持つ要素を配列から除外
     courses = courses.filter(course => course.id !== id);
     renderCourses(); // 再描画
+    // ★ 単位削除後に自動保存
+    saveCourses(); 
 }
 
 /**
- * 総単位数と分類ごとの単位数を集計し、表示を更新する
+ * 総単位数と分類ごとの単位数を集計し、表示を更新する (変更なし)
  */
 function updateSummary() {
     let totalCredits = 0;
@@ -99,5 +153,18 @@ function updateSummary() {
     }
 }
 
+/**
+ * 初期化処理
+ * ページロード時に実行し、保存されたデータを読み込む
+ */
+function init() {
+    loadCourses(); // データを読み込み、成功すれば renderCourses() が呼ばれる
+    if (courses.length === 0) {
+        // 読み込みデータがない場合も表示を初期化
+        renderCourses();
+    }
+}
+
 // 初期表示時に実行
-renderCourses();
+// ★ renderCourses() の代わりに init() を呼び出す
+document.addEventListener('DOMContentLoaded', init);
