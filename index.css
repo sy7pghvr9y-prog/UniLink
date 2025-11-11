@@ -1,6 +1,6 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f9;
+    background-color: #1a1a1a; /* 全体を黒っぽく */
     color: #333;
     padding: 20px;
     text-align: center;
@@ -94,4 +94,5 @@ button:hover {
     font-weight: bold;
     color: #dc3545;
 }
+
 
