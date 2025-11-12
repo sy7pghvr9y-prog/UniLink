@@ -32,6 +32,7 @@ h1 {
     table-layout: fixed; /* カラム幅を固定 */
 }
 
+/* ⚠️ ここが変更・追記された箇所です ⚠️ */
 #timetable th, #timetable td {
     border: 1px solid #ccc;
     padding: 10px 5px;
@@ -39,7 +40,13 @@ h1 {
     height: 60px; /* セルの高さを確保 */
     cursor: pointer; /* 編集可能であることを示す */
     transition: background-color 0.2s;
+    
+    /* ⭐︎ スマートフォンでの改行を防ぐための設定 ⭐︎ */
+    white-space: nowrap;  /* セル内での自動改行を無効にする */
+    overflow: hidden;     /* はみ出た内容を非表示にする */
+    text-overflow: ellipsis; /* はみ出たテキストを「...」で省略表示する (任意) */
 }
+/* -------------------------------------- */
 
 #timetable th {
     background-color: #007bff;
@@ -94,5 +101,6 @@ button:hover {
     font-weight: bold;
     color: #dc3545;
 }
+
 
 
